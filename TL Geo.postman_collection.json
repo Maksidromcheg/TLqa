@@ -1,0 +1,767 @@
+{
+	"info": {
+		"_postman_id": "2e4a65f3-7184-4c14-9437-60c631cd9f8e",
+		"name": "TL Geo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17604455"
+	},
+	"item": [
+		{
+			"name": "Circle-serach",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(typeof(pm.response.json().next))\r",
+							"const schema = {\r",
+							"    \"type\": \"object\",    \r",
+							"    \"properties\" : \r",
+							"    {\r",
+							"        \"next\": { \"type\": \"null\"},\r",
+							"        \"properties\":\r",
+							"        {\r",
+							"            \"type\": \"array\",\r",
+							"            \"minItems\": 1,\r",
+							"            \"items\" : \r",
+							"            {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\":\r",
+							"                {\r",
+							"                    \"id\" : {\"type\": \"string\"},  \r",
+							"                    \"name\": { \"type\": \"string\"},\r",
+							"                    \"cityId\": { \"type\": \"string\"},\r",
+							"                    \"regionId\": { \"type\": \"string\"},\r",
+							"                    \"countryCode\": { \"type\": \"string\"},\r",
+							"                    \"longitude\": { \"type\": \"number\"},\r",
+							"                    \"latitude\": { \"type\": \"number\"}\r",
+							"                },\r",
+							"                \"required\": [ \"id\", \"name\", \"cityId\", \"regionId\", \"countryCode\", \"longitude\", \"latitude\" ],\r",
+							"                \"additionalProperties\": false\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [ \"next\", \"properties\" ],\r",
+							"    \"additionalProperties\": false\r",
+							"}\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});\r",
+							"\r",
+							"pm.test('Countries code have 3 char', function()\r",
+							"    {\r",
+							"        var countryCode = pm.response.json().properties[0].countryCode.length;\r",
+							"        pm.expect(countryCode).to.be.eql(3);\r",
+							"    }\r",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "47306034-78fc-4767-bfd9-25e78825b985",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://partner.qatl.ru/api/geo/v1/properties/circle-search?latitude=56.637028&longitude=47.8772&radius=10000&count=500",
+					"protocol": "https",
+					"host": [
+						"partner",
+						"qatl",
+						"ru"
+					],
+					"path": [
+						"api",
+						"geo",
+						"v1",
+						"properties",
+						"circle-search"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "56.637028"
+						},
+						{
+							"key": "longitude",
+							"value": "47.8772"
+						},
+						{
+							"key": "radius",
+							"value": "10000"
+						},
+						{
+							"key": "count",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CountriesRUS",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const countryCodes = pm.variables.get('countriesArray');\r",
+							"pm.collectionVariables.set(\"countryCode\", \"RUS\")\r",
+							"//pm.collectionVariables.set('countryCode', countryCodes.shift());\r",
+							"/*for(let i = 0; i < 61; i++)\r",
+							"{\r",
+							"    pm.collectionVariables.set('countryCode', countryCodes.shift());\r",
+							"    console.log(pm.collectionVariables.get('countryCode'));\r",
+							"    postman.setNextRequest('CountriesRUS')\r",
+							"}\r",
+							"postman.setNextRequest(null)*/\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const schema = {\r",
+							"    \"type\": \"object\",    \r",
+							"    \"properties\" : \r",
+							"    {\r",
+							"        \"next\": { \"type\": \"null\"},\r",
+							"        \"properties\":\r",
+							"        {\r",
+							"            \"type\": \"array\",\r",
+							"            \"minItems\": 1,\r",
+							"            \"items\" : \r",
+							"            {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\":\r",
+							"                {\r",
+							"                    \"id\" : {\"type\": \"string\"},  \r",
+							"                    \"name\": { \"type\": \"string\"},\r",
+							"                    \"cityId\": { \"type\": \"string\"},\r",
+							"                    \"regionId\": { \"type\": \"string\"},\r",
+							"                    \"countryCode\": { \"type\": \"string\"},\r",
+							"                    \"longitude\": { \"type\": \"number\"},\r",
+							"                    \"latitude\": { \"type\": \"number\"}\r",
+							"                },\r",
+							"                \"required\": [ \"id\", \"name\", \"cityId\", \"regionId\", \"countryCode\", \"longitude\", \"latitude\" ],\r",
+							"                \"additionalProperties\": false\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [ \"next\", \"properties\" ],\r",
+							"    \"additionalProperties\": false\r",
+							"}\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});\r",
+							"\r",
+							"pm.test('Countries code have 3 char', function()\r",
+							"    {\r",
+							"        var countryCodeFirst = pm.response.json().properties[0].countryCode.length;\r",
+							"        pm.expect(countryCodeFirst).to.be.eql(3);\r",
+							"        var countryCodeLast = pm.response.json().properties[pm.response.json().properties.length - 1].countryCode.length;\r",
+							"        pm.expect(countryCodeLast).to.be.eql(3);\r",
+							"    }\r",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "47306034-78fc-4767-bfd9-25e78825b985",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://partner.qatl.ru/api/geo/v1/countries/{{countryCode}}/properties?count=500",
+					"protocol": "https",
+					"host": [
+						"partner",
+						"qatl",
+						"ru"
+					],
+					"path": [
+						"api",
+						"geo",
+						"v1",
+						"countries",
+						"{{countryCode}}",
+						"properties"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Regions44",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var Schema = {\r",
+							"    \"type\": \"object\",    \r",
+							"    \"properties\" : \r",
+							"    {\r",
+							"        \"next\": { \"type\": \"null\"},\r",
+							"        \"properties\":\r",
+							"        {\r",
+							"            \"type\": \"array\",\r",
+							"            \"minItems\": 1,\r",
+							"            \"items\" : \r",
+							"            {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\":\r",
+							"                {\r",
+							"                    \"id\" : {\"type\": \"string\"},  \r",
+							"                    \"name\": { \"type\": \"string\"},\r",
+							"                    \"cityId\": { \"type\": \"string\"},\r",
+							"                    \"regionId\": { \"type\": \"string\"},\r",
+							"                    \"countryCode\": { \"type\": \"string\"},\r",
+							"                    \"longitude\": { \"type\": \"number\"},\r",
+							"                    \"latitude\": { \"type\": \"number\"}\r",
+							"                },\r",
+							"                \"required\": [ \"id\", \"name\", \"cityId\", \"regionId\", \"countryCode\", \"longitude\", \"latitude\" ],\r",
+							"                \"additionalProperties\": false\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [ \"next\", \"properties\" ],\r",
+							"    \"additionalProperties\": false\r",
+							"};\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"});\r",
+							"\r",
+							"pm.test('Countries code have 3 char', function()\r",
+							"    {\r",
+							"        var countryCodeFirst = pm.response.json().properties[0].countryCode.length;\r",
+							"        pm.expect(countryCodeFirst).to.be.eql(3);\r",
+							"        var countryCodeLast = pm.response.json().properties[pm.response.json().properties.length - 1].countryCode.length;\r",
+							"        pm.expect(countryCodeLast).to.be.eql(3);\r",
+							"    }\r",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "47306034-78fc-4767-bfd9-25e78825b985",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://partner.qatl.ru/api/geo/v1/regions/44/properties?count=500",
+					"protocol": "https",
+					"host": [
+						"partner",
+						"qatl",
+						"ru"
+					],
+					"path": [
+						"api",
+						"geo",
+						"v1",
+						"regions",
+						"44",
+						"properties"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cities1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var Schema = {\r",
+							"    \"type\": \"object\",    \r",
+							"    \"properties\" : \r",
+							"    {\r",
+							"        \"next\": { \"type\": \"null\"},\r",
+							"        \"properties\":\r",
+							"        {\r",
+							"            \"type\": \"array\",\r",
+							"            \"minItems\": 1,\r",
+							"            \"items\" : \r",
+							"            {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\":\r",
+							"                {\r",
+							"                    \"id\" : {\"type\": \"string\"},  \r",
+							"                    \"name\": { \"type\": \"string\"},\r",
+							"                    \"cityId\": { \"type\": \"string\"},\r",
+							"                    \"regionId\": { \"type\": \"string\"},\r",
+							"                    \"countryCode\": { \"type\": \"string\"},\r",
+							"                    \"longitude\": { \"type\": \"number\"},\r",
+							"                    \"latitude\": { \"type\": \"number\"}\r",
+							"                },\r",
+							"                \"required\": [ \"id\", \"name\", \"cityId\", \"regionId\", \"countryCode\", \"longitude\", \"latitude\" ],\r",
+							"                \"additionalProperties\": false\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [ \"next\", \"properties\" ],\r",
+							"    \"additionalProperties\": false\r",
+							"};\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"});\r",
+							"\r",
+							"pm.test('Countries code have 3 char', function()\r",
+							"    {\r",
+							"        var countryCodeFirst = pm.response.json().properties[0].countryCode.length;\r",
+							"        pm.expect(countryCodeFirst).to.be.eql(3);\r",
+							"        var countryCodeLast = pm.response.json().properties[pm.response.json().properties.length - 1].countryCode.length;\r",
+							"        pm.expect(countryCodeLast).to.be.eql(3);\r",
+							"    }\r",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "47306034-78fc-4767-bfd9-25e78825b985",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://partner.qatl.ru/api/geo/v1/cities/1/properties",
+					"protocol": "https",
+					"host": [
+						"partner",
+						"qatl",
+						"ru"
+					],
+					"path": [
+						"api",
+						"geo",
+						"v1",
+						"cities",
+						"1",
+						"properties"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Countries",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// получаем профиль из ответа\r",
+							"var countries = pm.response.json().countries;\r",
+							"const codes = countries.map(code => code.code)\r",
+							"pm.variables.set('countriesArray', codes)\r",
+							"\r",
+							"// описываем схему модели\r",
+							"var Schema = {\r",
+							"    // указываем тип объекта\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": \r",
+							"    {\r",
+							"        \"countries\": \r",
+							"        {\r",
+							"            \"type\": \"array\",\r",
+							"            \"minItems\": 1,\r",
+							"            \"items\" : \r",
+							"            {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\":\r",
+							"                {\r",
+							"                    \"code\" : {\"type\": \"string\"},  \r",
+							"                    \"name\": { \"type\": \"string\"}\r",
+							"                },\r",
+							"                \"required\": [ \"code\", \"name\" ],\r",
+							"                \"additionalProperties\": false\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [ \"countries\" ],\r",
+							"    \"additionalProperties\": false\r",
+							"};\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"});\r",
+							"\r",
+							"pm.test('Countries code have 3 char', function()\r",
+							"    {\r",
+							"        var codeFirst = countries[0].code.length;\r",
+							"        var codeLast = countries[countries.length - 1].code.length;        \r",
+							"        pm.expect(codeFirst).to.be.eql(3);\r",
+							"        pm.expect(codeLast).to.be.eql(3);\r",
+							"    }\r",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "47306034-78fc-4767-bfd9-25e78825b985",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://partner.qatl.ru/api/geo/v1/countries",
+					"protocol": "https",
+					"host": [
+						"partner",
+						"qatl",
+						"ru"
+					],
+					"path": [
+						"api",
+						"geo",
+						"v1",
+						"countries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Countries Regions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var Schema = {\r",
+							"    // указываем тип объекта\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": \r",
+							"    {\r",
+							"        \"regions\": \r",
+							"        {\r",
+							"            \"type\": \"array\",\r",
+							"            \"minItems\": 1,\r",
+							"            \"items\" : \r",
+							"            {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\":\r",
+							"                {\r",
+							"                    \"id\" : {\"type\": \"string\"},  \r",
+							"                    \"name\": { \"type\": \"string\"},\r",
+							"                    \"countryCode\": {\"type\": \"string\"}\r",
+							"                },\r",
+							"                \"required\": [ \"id\", \"name\", \"countryCode\"],\r",
+							"                \"additionalProperties\": false\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [ \"regions\" ],\r",
+							"    \"additionalProperties\": false\r",
+							"};\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"});\r",
+							"\r",
+							"pm.test('Countries code have 3 char', function()\r",
+							"    {\r",
+							"        var countryCodeFirst = pm.response.json().regions[0].countryCode.length;\r",
+							"        pm.expect(countryCodeFirst).to.be.eql(3);\r",
+							"        var countryCodeLast = pm.response.json().regions[pm.response.json().regions.length - 1].countryCode.length;\r",
+							"        pm.expect(countryCodeLast).to.be.eql(3);\r",
+							"    }\r",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "47306034-78fc-4767-bfd9-25e78825b985",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://partner.qatl.ru/api/geo/v1/countries/RUS/regions",
+					"protocol": "https",
+					"host": [
+						"partner",
+						"qatl",
+						"ru"
+					],
+					"path": [
+						"api",
+						"geo",
+						"v1",
+						"countries",
+						"RUS",
+						"regions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Countries Cities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var Schema = {\r",
+							"    // указываем тип объекта\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": \r",
+							"    {\r",
+							"        \"cities\": \r",
+							"        {\r",
+							"            \"type\": \"array\",\r",
+							"            \"minItems\": 1,\r",
+							"            \"items\" : \r",
+							"            {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\":\r",
+							"                {\r",
+							"                    \"id\" : {\"type\": \"string\"},  \r",
+							"                    \"name\": { \"type\": \"string\"},\r",
+							"                    \"regionId\": { \"type\": \"string\"},\r",
+							"                    \"countryCode\": { \"type\": \"string\"}\r",
+							"                },\r",
+							"                \"required\": [ \"id\", \"name\", \"regionId\", \"countryCode\" ],\r",
+							"                \"additionalProperties\": false\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [ \"cities\" ],\r",
+							"    \"additionalProperties\": false\r",
+							"};\r",
+							"\r",
+							"pm.test('Schema is valid', function() {\r",
+							"    pm.response.to.have.jsonSchema(Schema);\r",
+							"});\r",
+							"\r",
+							"pm.test('Countries code have 3 char', function()\r",
+							"    {\r",
+							"        var countryCodeFirst = pm.response.json().cities[0].countryCode.length;\r",
+							"        pm.expect(countryCodeFirst).to.be.eql(3);\r",
+							"        var countryCodeLast = pm.response.json().cities[pm.response.json().cities.length - 1].countryCode.length;\r",
+							"        pm.expect(countryCodeLast).to.be.eql(3);\r",
+							"    }\r",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "47306034-78fc-4767-bfd9-25e78825b985",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://partner.qatl.ru/api/geo/v1/countries/RUS/cities",
+					"protocol": "https",
+					"host": [
+						"partner",
+						"qatl",
+						"ru"
+					],
+					"path": [
+						"api",
+						"geo",
+						"v1",
+						"countries",
+						"RUS",
+						"cities"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "47306034-78fc-4767-bfd9-25e78825b985",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-API-KEY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status ok\", ",
+					"    function(){",
+					"        pm.response.to.be.ok;",
+					"    }",
+					");",
+					"",
+					"pm.test(\"Response JSON\",",
+					"    function(){",
+					"        pm.response.to.be.json;",
+					"    }",
+					");",
+					"",
+					"pm.test(\"Response time less than 2000ms\", function()",
+					"    {",
+					"        pm.expect(pm.response.responseTime).to.be.below(1000);",
+					"    }",
+					")"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "next",
+			"value": ""
+		},
+		{
+			"key": "countriesArray",
+			"value": ""
+		},
+		{
+			"key": "countryCode",
+			"value": "RUS"
+		}
+	]
+}
